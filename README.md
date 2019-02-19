@@ -1,22 +1,24 @@
 # MarketVision Node Coding Challenge
 
+Fork this repo with the answers and submit back!
+
 ## Challenge 1: Data Transformations
 
 Take the following data of student test scores:
 
 ```js
 [{
-	name: 'Bobby',
-	scores: [62,88,91,56,70]
+    name: 'Bobby',
+    scores: [62,88,91,56,70]
 },{
-	name: 'Katie',
-	scores: [93,70,66,85,89]
+    name: 'Katie',
+    scores: [93,70,66,85,89]
 },{
-	name: 'Michael',
-	scores: [61,82,90,79,89]
+    name: 'Michael',
+    scores: [61,82,90,79,89]
 },{
-	name: 'Sarah',
-	scores: [80,94,86,91,81]
+    name: 'Sarah',
+    scores: [80,94,86,91,81]
 }]
 ```
 
@@ -35,12 +37,12 @@ Write a function `serialPromise()` that will execute promises in series.
 Example promise function:
 ```js
 function delayPromise(ms) {
-	return new Promise(resolve => {
-		setTimeout(() => {
-			console.log('delayPromise(%d) done', ms);
-			resolve(2*ms);
-		}, ms);
-	});
+    return new Promise(resolve => {
+        setTimeout(() => {
+            console.log('delayPromise(%d) done', ms);
+            resolve(2*ms);
+        }, ms);
+    });
 }
 ```
 I should be able to run:
@@ -71,5 +73,3 @@ Would result in:
 ```
 
 Because of the `resolve(2*ms)` in the `delayPromise()` function.
-
-
