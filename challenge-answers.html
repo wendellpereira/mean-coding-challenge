@@ -1,0 +1,109 @@
+<!doctype html>
+<head>
+        <meta charset="utf-8">
+        <title>MarketVision Node Coding Challenge</title>
+</head>
+<body>
+    <h2>Challenge 1: Data Transformations</h2>
+    <p> Students Average, min and max scores:</p>
+    <div style="font-family: monospace" id='results1.1'></div>
+    <p><b> Winner with highest average score: </b></p>
+    <div id='results1.2'></div>
+    
+    <h2>Challenge 2: Data Transformations II</h2>
+    <p> Write a single ES6 expression to take 'a=4,b=15,c=42' and convert it into an object.</p>
+    <div style="font-family: monospace" id='results2'></div>
+    
+    <h2>Challenge 3: Serialize Promises - with the bonus question</h2>
+    <p> Write a function serialPromise() that will execute promises in series. </p>
+    <p> Have serialPromise() resolve to an array of the individual promise resolutions: </p>
+    <div style="font-family: monospace" id='results3'></div>
+
+    <br>
+    <br>
+    <p> *Sure, the results are on the console! </p>
+    <p> But, no one likes a blank page =) </p>
+
+    <script>
+
+        // Challenge 1: Data Transformations
+        const students = [{
+            name: 'Bobby',
+            scores: [62,88,91,56,70]
+        },{
+            name: 'Katie',
+            scores: [93,70,66,85,89]
+        },{
+            name: 'Michael',
+            scores: [61,82,90,79,89]
+        },{
+            name: 'Sarah',
+            scores: [80,94,86,91,81]
+        },{
+            name: 'João',
+            scores: [20,24,86,31,31]
+        }];
+
+        let winnerAvg = 0, winnerIndex = 0;
+
+        const newStdArray = students.map( (student, index) => {
+            student.min     = student.scores.reduce((max, cur) => Math.min(max, cur), Infinity);
+            student.max     = student.scores.reduce((max, cur) => Math.max(max, cur), -Infinity);
+            student.average = student.scores.reduce((acu, cur) => acu + cur) / student.scores.length;
+            if( student.average > winnerAvg ) {
+                winnerAvg   = student.average;
+                winnerIndex = index;
+            }
+            delete student.scores;
+            return student;
+        });
+
+        console.info('Challenge 1: Data Transformations');
+        
+        console.info('Students avg, min and max scores: ', newStdArray);
+        console.info('Winner: ', newStdArray[winnerIndex].name, ', with average score: ', newStdArray[winnerIndex].average);
+
+        document.getElementById('results1.1').innerHTML = JSON.stringify(newStdArray);
+        document.getElementById('results1.2').innerHTML = newStdArray[winnerIndex].name + ', with average score: ' + newStdArray[winnerIndex].average;
+
+
+
+        // Challenge 2: Data Transformations II
+        let newObj = JSON.parse( '{' + 'a=4,b=15,c=42'.replace(/=/g, ':').replace(/[a-z]/g, '"$&"') + '}') ;
+
+        console.info('Challenge 2: Data Transformations II');
+        console.info('New Object: ', newObj); // TODO: colocar na tela
+        document.getElementById('results2').innerHTML = JSON.stringify(newObj);
+
+
+
+        // Challenge 3 Serialize Promises
+        console.info('Challenge 3 Serialize Promises');
+
+        function delayPromise(ms) {
+            return new Promise( (resolve) => {
+                setTimeout(() => {
+                    console.info('delayPromise(%d) done', ms);
+                    document.getElementById('results3').innerHTML += `delayPromise(${ms}) done <br>`;
+                    resolve(2*ms);
+                }, ms);
+            });
+        }
+
+        function serialPromise(delayPromise, arr) {
+          const reducer = (acc$, item) =>
+            acc$.then(acc => delayPromise(item).then(result => acc.push(result) && acc));
+          return arr.reduce(reducer, Promise.resolve([]));
+        }
+
+        console.time('serialPromise');
+        serialPromise(delayPromise, [100,200,700,2000,1000]).then((res) => {
+            console.timeEnd('serialPromise')
+            console.info(`Final times(Bonus): ${res}`);
+            document.getElementById('results3').innerHTML += `Final times(Bonus): ${res}`;
+        });
+
+     </script>
+
+</body>
+</html>
