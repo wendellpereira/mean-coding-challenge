@@ -1,3 +1,6 @@
+## [Answers preview](https://htmlpreview.github.io/?https://github.com/wendellpereira/mean-coding-challenge/blob/master/challenge-answers.html)
+  
+
 # MarketVision Node Coding Challenge
 
 Fork this repo with the answers and submit back!
